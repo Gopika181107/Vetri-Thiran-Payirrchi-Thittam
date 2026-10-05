@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<title>All Users - FitBuddy</title>
+</head>
+<body>
+<main class="wrap wide">
+  <div class="panel">
+    <h1>📋 FitBuddy - All Users &amp; Workout Plans</h1>
+    {% if users %}
+    <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th><th>Name</th><th>Age</th><th>Weight (kg)</th><th>Goal</th>
+          <th>Intensity</th><th>Original plan</th><th>Updated plan</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.weight }}</td>
+          <td>{{ user.goal }}</td>
+          <td>{{ user.intensity }}</td>
+          <td><pre>{{ user.original_plan }}</pre></td>
+          <td><pre>{{ user.updated_plan }}</pre></td>
+          <td>
+            <form action="/delete-user/{{ user.id }}" method="post"
+                  onsubmit="return confirm('Delete {{ user.name|e }} and their plans?');">
+              <button class="danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    {% else %}
+    <p class="empty">No users yet. Generate a plan and it will show up here.</p>
+    {% endif %}
+  </div>
+  <div class="topbar"><a class="btn ghost" href="/">Back to form</a></div>
+</main>
+</body>
+</html>
